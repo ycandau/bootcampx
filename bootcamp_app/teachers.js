@@ -1,14 +1,18 @@
+require('dotenv').config();
+
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  user: 'vagrant',
-  password: '123',
-  host: 'localhost',
-  database: 'bootcampx',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 const logTeachers = (cohort) =>
-  pool.query(`
+  pool
+    .query(
+      `
 SELECT DISTINCT teachers.name as teacher, cohorts.name as cohort
 FROM
   assistance_requests
